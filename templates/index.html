@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GemScope</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      min-height: 100vh;
+      background-image: url('static/uploads/1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: #010102;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.7);
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 90%;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, #3498db, #8e44ad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .gem-icon {
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      animation: sparkle 2s infinite alternate;
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 0.8; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1.05); }
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    form {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .file-input-container {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="file"] {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    label[for="image-input"] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.5rem;
+      background-color: #f0f0f0;
+      color: #333;
+      border: 2px dashed #3498db;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    label[for="image-input"]:hover {
+      background-color: #e3f2fd;
+      border-color: #2980b9;
+    }
+
+    .file-input-icon {
+      margin-right: 10px;
+    }
+
+    #file-name {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    button {
+      padding: 0.8rem 2rem;
+      background: linear-gradient(45deg, #3498db, #2980b9);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: linear-gradient(45deg, #2980b9, #1a5276);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    footer {
+      margin-top: 3rem;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="gem-icon">💎</div>
+    <h1>GemScope</h1>
+    <p class="tagline">Advanced Gemstone Identification & Analysis</p>
+
+    <form action="/predict" method="post" enctype="multipart/form-data">
+      <div class="file-input-container">
+        <input type="file" name="image" id="image-input" accept="image/*" required />
+        <label for="image-input" class="file-input-label">
+          <span class="file-input-icon">📷</span>
+          <span>Choose a gemstone image</span>
+        </label>
+      </div>
+
+      <p id="file-name"></p>
+
+      <button type="submit">
+        Analyze Gemstone
+      </button>
+    </form>
+
+    <footer>
+      Upload a clear image of your gemstone for accurate identification
+    </footer>
+  </div>
+
+  <script>
+    const input = document.getElementById('image-input');
+    const fileNameDisplay = document.getElementById('file-name');
+    input.addEventListener('change', function () {
+      fileNameDisplay.textContent = this.files[0]?.name || '';
+    });
+  </script>
+</body>
+</html>
